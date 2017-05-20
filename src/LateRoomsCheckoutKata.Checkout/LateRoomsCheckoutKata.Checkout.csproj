@@ -39,8 +39,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Checkout.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LateRoomsCheckoutKata.Checkout.Contracts\LateRoomsCheckoutKata.Checkout.Contracts.csproj">
+      <Project>{7d77c6a5-edf2-469b-b470-6999533ab749}</Project>
+      <Name>LateRoomsCheckoutKata.Checkout.Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

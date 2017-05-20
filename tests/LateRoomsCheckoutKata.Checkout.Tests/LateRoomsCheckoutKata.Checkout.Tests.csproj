@@ -69,6 +69,16 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\LateRoomsCheckoutKata.Checkout.Contracts\LateRoomsCheckoutKata.Checkout.Contracts.csproj">
+      <Project>{7d77c6a5-edf2-469b-b470-6999533ab749}</Project>
+      <Name>LateRoomsCheckoutKata.Checkout.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\LateRoomsCheckoutKata.Checkout\LateRoomsCheckoutKata.Checkout.csproj">
+      <Project>{4fc9f41d-2cb3-40f2-a439-cbee481b6713}</Project>
+      <Name>LateRoomsCheckoutKata.Checkout</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
