@@ -3,8 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AAA7A283-132B-46D2-8287-121FE01B5DB0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F614F288-E3DB-42D1-97AD-AFE6567DC62A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LateRoomsCheckoutKata.Contracts", "src\LateRoomsCheckoutKata.Contracts\LateRoomsCheckoutKata.Contracts.csproj", "{7D77C6A5-EDF2-469B-B470-6999533AB749}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7D77C6A5-EDF2-469B-B470-6999533AB749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D77C6A5-EDF2-469B-B470-6999533AB749}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D77C6A5-EDF2-469B-B470-6999533AB749}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D77C6A5-EDF2-469B-B470-6999533AB749}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7D77C6A5-EDF2-469B-B470-6999533AB749} = {AAA7A283-132B-46D2-8287-121FE01B5DB0}
 	EndGlobalSection
 EndGlobal
