@@ -1,3 +1,5 @@
+using System.Text;
+
 //Variables that determine the configuration and target to run by default. These can be specified at the commandline for CI purposes.
 var target = Argument("target", "Default");
 var configuration = Argument<string>("configuration", "Release");
@@ -30,6 +32,7 @@ Task("__RestoreNugetPackages")
         Information("Restoring NuGet Packages for {0}", solution);
         NuGetRestore(solution);
 });
+
 Task("__BuildSolution")
     .Does(() =>
 {
@@ -44,10 +47,23 @@ Task("__BuildSolution")
                 .SetNodeReuse(false));
 });
 
+Task("__RunTests")
+    .Does(() =>
+{
+        Information("Running tests for the {0} solution.", solution);
+StringBuilder testFilesGlob =new StringBuilder(testsPath);
+testFilesGlob =testFilesGlob.Append("/**/bin/");
+testFilesGlob =testFilesGlob.Append(configuration);
+testFilesGlob =testFilesGlob.Append("/*.Tests*.dll");
+var allTestFiles =GetFiles(testFilesGlob.ToString());
+NUnit3(allTestFiles);
+});
+
 Task("Build")
     .IsDependentOn("__Clean")
     .IsDependentOn("__RestoreNugetPackages")
-    .IsDependentOn("__BuildSolution");
+    .IsDependentOn("__BuildSolution")
+    .IsDependentOn("__RunTests");
 
 Task("Default")
 .IsDependentOn("Build");
