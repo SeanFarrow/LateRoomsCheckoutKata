@@ -15,6 +15,11 @@ namespace LateRoomsCheckoutKata.Checkout
         ///<InheritDoc/>
         public void Scan(string item)
         {
+            if (item == null)
+            {
+                throw new ArgumentNullException("item", "A null item has been passed in. The item cannot be null.");
+            }
+            
             throw new NotImplementedException();
         }
         
