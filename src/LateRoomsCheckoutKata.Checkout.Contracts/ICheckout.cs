@@ -1,4 +1,4 @@
-﻿namespace LateRoomsCheckoutKata.Contracts
+﻿namespace LateRoomsCheckoutKata.Checkout.Contracts
 {
     /// <summary>
     /// The interface for a supermarket checkout.
