@@ -9,14 +9,15 @@ var configuration = Argument<string>("configuration", "Release");
 ///////////////////////////////////////////////////////////////////////////////
 var solution = File("LateRoomsCheckoutKata.sln");
 var srcPath =Directory("./src");
+var testResultsPath =Directory("./TestResults");
 var testsPath =Directory("./tests");
 var nugetPackagesPath =Directory("./packages");
 
 Task("__Clean")
     .Does(() =>
 {
-        Information("Cleaning the NuGet packages and any binary files inthe source folder.");
-var cleaningDirectories =new DirectoryPathCollection(new DirectoryPath[] {nugetPackagesPath}, PathComparer.Default); 
+        Information("Cleaning the NuGet packages, test results and any binary files in the source folder.");
+var cleaningDirectories =new DirectoryPathCollection(new DirectoryPath[]{testResultsPath, nugetPackagesPath}, PathComparer.Default); 
 //Clean the source directories.
 string dirsGlob =srcPath;
 dirsGlob =dirsGlob+"/**/bin/";
@@ -24,6 +25,13 @@ dirsGlob =dirsGlob +configuration;
 var dirsToClean =GetDirectories(dirsGlob);
 cleaningDirectories.Add(dirsToClean);
 CleanDirectories(cleaningDirectories);
+//Clean the test directories.
+dirsGlob =testsPath;
+dirsGlob =dirsGlob+"/**/bin/";
+dirsGlob =dirsGlob +configuration;
+dirsToClean =GetDirectories(dirsGlob);
+cleaningDirectories.Add(dirsToClean);
+
 });
 
 Task("__RestoreNugetPackages")
@@ -56,7 +64,11 @@ testFilesGlob =testFilesGlob.Append("/**/bin/");
 testFilesGlob =testFilesGlob.Append(configuration);
 testFilesGlob =testFilesGlob.Append("/*.Tests*.dll");
 var allTestFiles =GetFiles(testFilesGlob.ToString());
-NUnit3(allTestFiles);
+var settings =new NUnit3Settings();
+settings.ErrorOutputFile =System.IO.Path.Combine(testResultsPath, "TestErrors.xml");
+settings.OutputFile =System.IO.Path.Combine(testResultsPath, "TestOutput.xml");
+settings.Results =System.IO.Path.Combine(testResultsPath, "Results.xml");
+NUnit3(allTestFiles, settings);
 });
 
 Task("Build")
