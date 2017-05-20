@@ -7,8 +7,8 @@
     <ProjectGuid>{7D77C6A5-EDF2-469B-B470-6999533AB749}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LateRoomsCheckoutKata.Contracts</RootNamespace>
-    <AssemblyName>LateRoomsCheckoutKata.Contracts</AssemblyName>
+    <RootNamespace>LateRoomsCheckoutKata.Checkout.Contracts</RootNamespace>
+    <AssemblyName>LateRoomsCheckoutKata.Checkout.Contracts</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
