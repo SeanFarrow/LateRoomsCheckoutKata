@@ -25,6 +25,16 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                     .And.Message.Should()
                     .Be("A null item has been passed in. The item cannot be null.\r\nParameter name: item");
             }
+            
+            [Test]
+            public void ShouldThrowAnArgumentExceptionWhenTheItemIsAnEmptyString()
+            {
+                var checkout = new Checkout();
+                Action act = () => checkout.Scan(String.Empty);
+                act.ShouldThrow<ArgumentException>()
+                    .And.Message.Should()
+                    .Be("An empty item has been passed in. The item cannot be an empty string.\r\nParameter name: item");
+            }
         }
     }
 }
