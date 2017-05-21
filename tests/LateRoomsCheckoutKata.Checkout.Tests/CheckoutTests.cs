@@ -28,7 +28,18 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                     .And.Message.Should()
                     .Be("A null product repository has been passed in. The product repository cannot be null.\r\nParameter name: productRepository");
             }
-        }
+
+            [Test]
+            public void ShouldThrowAnArgumentNullExceptionWithAnAppropriateMessageWhenTheProductDiscountRuleRepositoryIsNull()
+            {
+                var productRepository = Substitute.For<IProductRepository>();
+                IProductDiscountRuleRepository productDiscountRuleRepository = null;
+                Action act = () => new Checkout(productRepository, productDiscountRuleRepository);
+                act.ShouldThrow<ArgumentNullException>()
+                    .And.Message.Should()
+                    .Be("A null product discount rule repository has been passed in. The product discount rule repository cannot be null.\r\nParameter name: productDiscountRuleRepository");
+            }
+            }
         
         /// <summary>
         /// This class contains all tests for the Scan method.
