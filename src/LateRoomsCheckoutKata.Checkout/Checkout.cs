@@ -19,7 +19,11 @@ namespace LateRoomsCheckoutKata.Checkout
             {
                 throw new ArgumentNullException("item", "A null item has been passed in. The item cannot be null.");
             }
-            
+            else if (!item.Any())
+            {
+                throw new ArgumentException("An empty item has been passed in. The item cannot be an empty string.", "item");
+            }
+
             throw new NotImplementedException();
         }
         
