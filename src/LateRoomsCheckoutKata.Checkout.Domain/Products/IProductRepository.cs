@@ -5,6 +5,6 @@
     /// </summary>
     public interface IProductRepository
     {
-        
+        Product FindProductBySKU(string SKU);
     }
 }

@@ -75,6 +75,18 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                     .And.Message.Should()
                     .Be("An empty item has been passed in. The item cannot be an empty string.\r\nParameter name: item");
             }
+
+            [Test]
+            public void ShouldThrowAProductWithSKUNotFoundExceptionWhenTheItemPassedInIsNotASKUAvailableInTheProductRepository()
+            {
+                var sku = "a"; 
+                var productRepository = Substitute.For<IProductRepository>();
+                productRepository.FindProductBySKU(sku).Returns(X => { throw new ProductWithSKUNotFoundException(); });                
+                var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
+                var checkout =new Checkout(productRepository, productDiscountRuleRepository);
+                Action act = () => checkout.Scan(sku);
+                act.ShouldThrow<ProductWithSKUNotFoundException>();
+            }
         }
     }
 }

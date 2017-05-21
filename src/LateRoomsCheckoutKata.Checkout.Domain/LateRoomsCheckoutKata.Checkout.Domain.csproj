@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Products\IProductRepository.cs" />
     <Compile Include="Products\IProductDiscountRuleRepository.cs" />
+    <Compile Include="Products\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
