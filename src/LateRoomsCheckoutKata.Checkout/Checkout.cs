@@ -13,6 +13,9 @@ namespace LateRoomsCheckoutKata.Checkout
     /// </summary>
     public class Checkout: ICheckout
     {
+        private IProductRepository _productRepository;
+        private IProductDiscountRuleRepository _productDiscountRuleRepository;
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="Checkout"/> class.
         /// </summary>
@@ -28,8 +31,9 @@ namespace LateRoomsCheckoutKata.Checkout
             {
                 throw new ArgumentNullException("productDiscountRuleRepository", "A null product discount rule repository has been passed in. The product discount rule repository cannot be null.");
             }
-            
-            throw new NotImplementedException();
+
+            this._productRepository = productRepository;
+            this._productDiscountRuleRepository = productDiscountRuleRepository;
         }
         
         /// <summary>
