@@ -22,9 +22,11 @@ namespace LateRoomsCheckoutKata.Checkout
         {
             if (productRepository == null)
             {
-                throw new ArgumentNullException(
-                    "productRepository",
-                    "A null product repository has been passed in. The product repository cannot be null.");
+                throw new ArgumentNullException("productRepository", "A null product repository has been passed in. The product repository cannot be null.");
+            }
+            else if (productDiscountRuleRepository == null)
+            {
+                throw new ArgumentNullException("productDiscountRuleRepository", "A null product discount rule repository has been passed in. The product discount rule repository cannot be null.");
             }
             
             throw new NotImplementedException();
