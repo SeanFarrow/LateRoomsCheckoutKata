@@ -3,7 +3,7 @@
     /// <summary>
     ///An interface for a repository used to deal with products the supermarket sells.
     /// </summary>
-    public interface IAvailableProductRepository
+    public interface IProductRepository
     {
         
     }
