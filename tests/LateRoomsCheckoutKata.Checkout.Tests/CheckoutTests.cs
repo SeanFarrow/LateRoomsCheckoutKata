@@ -5,11 +5,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NSubstitute;
+using LateRoomsCheckoutKata.Checkout.Domain.Products;
 
 namespace LateRoomsCheckoutKata.Checkout.Tests
 {
     public class CheckoutTests
     {
+        /// <summary>
+        /// The class provides all tests for the <see cref="Checkout"/> constructor.
+        /// </summary>
+        [TestFixture]
+        public class TheCheckoutConstructor
+        {
+            [Test]
+            public void ShouldThrowAnArgumentNullExceptionWithAnAppropriateMessageWhenTheProductRepositoryIsNull()
+            {
+                var productRepository = null;
+                var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
+                Action act = () => new Checkout(productRepository, productDiscountRuleRepository);
+                act.ShouldThrow<ArgumentNullException>()
+                    .And.Message.Should()
+                    .Be("A null product repository has been passed in. The product repository cannot be null.\r\nParameter name: productRepository");
+            }
+        }
+        
         /// <summary>
         /// This class contains all tests for the Scan method.
         /// </summary>

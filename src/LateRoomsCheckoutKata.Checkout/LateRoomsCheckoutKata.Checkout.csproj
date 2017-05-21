@@ -47,6 +47,10 @@
       <Project>{7d77c6a5-edf2-469b-b470-6999533ab749}</Project>
       <Name>LateRoomsCheckoutKata.Checkout.Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LateRoomsCheckoutKata.Checkout.Domain\LateRoomsCheckoutKata.Checkout.Domain.csproj">
+      <Project>{7bcc9b3b-76aa-42f5-a48a-16f7fd1d4079}</Project>
+      <Name>LateRoomsCheckoutKata.Checkout.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
