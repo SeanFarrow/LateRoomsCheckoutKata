@@ -20,6 +20,13 @@ namespace LateRoomsCheckoutKata.Checkout
         /// <param name="productDiscountRuleRepository">The repository providing access to the discount rules for <see cref="Product"/>s in the supermarket.</param>
         public Checkout(IProductRepository productRepository, IProductDiscountRuleRepository productDiscountRuleRepository)
         {
+            if (productRepository == null)
+            {
+                throw new ArgumentNullException(
+                    "productRepository",
+                    "A null product repository has been passed in. The product repository cannot be null.");
+            }
+            
             throw new NotImplementedException();
         }
         
