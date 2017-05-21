@@ -23,6 +23,14 @@ namespace LateRoomsCheckoutKata.Checkout
             throw new NotImplementedException();
         }
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Checkout"/> class.
+        /// </summary>
+        public Checkout()
+        {
+            // TODO: Complete member initialization
+        }
+        
         ///<InheritDoc/>
         public void Scan(string item)
         {

@@ -21,7 +21,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             [Test]
             public void ShouldThrowAnArgumentNullExceptionWithAnAppropriateMessageWhenTheProductRepositoryIsNull()
             {
-                var productRepository = null;
+                IProductRepository productRepository = null;
                 var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
                 Action act = () => new Checkout(productRepository, productDiscountRuleRepository);
                 act.ShouldThrow<ArgumentNullException>()
