@@ -67,7 +67,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             }
             
             [Test]
-            public void ShouldThrowAnArgumentExceptionWithAnAppropriateMessageWhenTheItemIsAnEmptyString()
+            public void ShouldThrowAnArgumentExceptionWithAnAppropriateMessageWhenTheItemBeingScannedIsAnEmptyString()
             {
                 var checkout = new Checkout();
                 Action act = () => checkout.Scan(String.Empty);
