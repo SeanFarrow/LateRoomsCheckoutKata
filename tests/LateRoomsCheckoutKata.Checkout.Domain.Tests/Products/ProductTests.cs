@@ -25,7 +25,7 @@ namespace LateRoomsCheckoutKata.Checkout.Domain.Tests.Products
             [Test]
             public void ShouldThrowAnArgumentExceptionWithAnAppropriateMessageWhenTheSKUPassedInIsAnEmtpyString()
             {
-                string sku = null;
+                string sku = String.Empty;
                 uint unitPrice = 50;
                 Action act = () => new Product(sku, unitPrice);
                 act.ShouldThrow<ArgumentException>().And.Message.Should().Be("An empty sku has been passed in. The sku cannot be an empty string.\r\nParameter name: sku");
