@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+
 namespace LateRoomsCheckoutKata.Checkout.Domain.Products
 {
     /// <summary>
@@ -23,6 +25,10 @@ namespace LateRoomsCheckoutKata.Checkout.Domain.Products
             if (sku == null)
             {
                 throw new ArgumentNullException("sku", "A null sku has been passed in. The sku cannot be null.");
+            }
+            else if (!sku.Any())
+            {
+                throw new ArgumentException("An empty sku has been passed in. The sku cannot be an empty string.", "sku");
             }
             
             throw new NotImplementedException();

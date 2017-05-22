@@ -21,7 +21,7 @@ namespace LateRoomsCheckoutKata.Checkout.Domain.Tests.Products
             }
             
             [Test]
-            public void ShouldThrowAnArgumentNullExceptionWithAnAppropriateMessageWhenTheMessageCannotBeAssignedBecauseTheSKUStringPassedInIsEmpty()
+            public void ShouldThrowAnArgumentExceptionWithAnAppropriateMessageWhenTheMessageCannotBeAssignedBecauseTheSKUStringPassedInIsEmpty()
             {
                 Action act = () => new ProductWithSKUNotFoundException(String.Empty);
                 act.ShouldThrow<ArgumentException>().And.Message.Should().Be("An empty sku has been passed in. The sku cannot be an empty string.\r\nParameter name: sku");
