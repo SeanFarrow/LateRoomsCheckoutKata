@@ -60,11 +60,10 @@ namespace LateRoomsCheckoutKata.Checkout
             {
                 var product = this._productRepository.FindProductBySKU(item);
             }
-            catch (ProductWithSKUNotFoundException pnex)
+            catch (ProductWithSKUNotFoundException)
             {
-                
+                throw;
             }
-            throw new NotImplementedException();
         }
         
         ///<InheritDoc/>
