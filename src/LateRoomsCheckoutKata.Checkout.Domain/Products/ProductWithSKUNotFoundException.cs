@@ -12,8 +12,20 @@ namespace LateRoomsCheckoutKata.Checkout.Domain.Products
         public ProductWithSKUNotFoundException()
         {
         }
+
         public ProductWithSKUNotFoundException(string sku)
+            : base(CheckSKUIsValid(sku))
         {
+        }
+
+        private static string CheckSKUIsValid(string sku)
+        {
+            if (sku == null)
+            {
+                throw new ArgumentNullException("sku", "A null sku has been passed in. The sku cannot be null.");
+            }
+            
+            throw new NotImplementedException();
         }
     }
 }
