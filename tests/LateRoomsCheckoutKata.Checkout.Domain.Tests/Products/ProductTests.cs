@@ -39,6 +39,16 @@ namespace LateRoomsCheckoutKata.Checkout.Domain.Tests.Products
                 Action act = () => new Product(sku, unitPrice);
                 act.ShouldThrow<ArgumentOutOfRangeException>().And.Message.Should().Be("0 has been passed in as the unit price.The unit price must be 1 or greater.\r\nParameter name: unitPrice");
             }
+            
+            [Test]
+            public void ShouldAssignTheSkuAndUnitPricePropertiesWhenThePassedInSkuAndUnitPriceAreBothValid()
+            {
+                string sku = "a";
+                uint unitPrice = 50;
+                var expectedProduct = new Product(sku, unitPrice);
+                var newProduct = new Product(sku, unitPrice);
+                newProduct.ShouldBeEquivalentTo(expectedProduct);
+            }
         }
     }
 }

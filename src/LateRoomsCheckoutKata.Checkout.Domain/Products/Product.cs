@@ -24,5 +24,5 @@ namespace LateRoomsCheckoutKata.Checkout.Domain.Products
                 
                 throw new NotImplementedException();
             }
-        }
+    }
 }
