@@ -9,6 +9,11 @@ namespace LateRoomsCheckoutKata.Checkout.Domain.Products
     {
             public Product(string sku, uint unitPrice)
             {
+                if (sku == null)
+                {
+                    throw new ArgumentNullException("sku", "A null sku has been passed in. The sku cannot be null.");
+                }
+                
                 throw new NotImplementedException();
             }
         }
