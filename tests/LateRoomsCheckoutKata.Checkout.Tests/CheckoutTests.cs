@@ -81,7 +81,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             {
                 var sku = "a"; 
                 var productRepository = Substitute.For<IProductRepository>();
-                productRepository.FindProductBySKU(sku).Returns(X => { throw new ProductWithSKUNotFoundException(); });                
+                productRepository.FindProductBySKU(sku).Returns(X => { throw new ProductWithSKUNotFoundException(sku); });                
                 var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
                 var checkout =new Checkout(productRepository, productDiscountRuleRepository);
                 Action act = () => checkout.Scan(sku);
