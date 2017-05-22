@@ -77,7 +77,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             }
 
             [Test]
-            public void ShouldThrowAProductWithSKUNotFoundExceptionWhenTheItemPassedInIsNotASKUAvailableInTheProductRepository()
+            public void ShouldThrowAProductWithSKUNotFoundExceptionWithAnAppropriateMessageWhenTheItemPassedInIsNotASKUAvailableInTheProductRepository()
             {
                 var sku = "a"; 
                 var productRepository = Substitute.For<IProductRepository>();
@@ -85,7 +85,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                 var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
                 var checkout =new Checkout(productRepository, productDiscountRuleRepository);
                 Action act = () => checkout.Scan(sku);
-                act.ShouldThrow<ProductWithSKUNotFoundException>();
+                act.ShouldThrow<ProductWithSKUNotFoundException>().And.Message.Should().Be("The product with stock keeping unit 'a' could not be found in the product repository.");
             }
         }
     }
