@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Text;
 
 //Variables that determine the configuration and target to run by default. These can be specified at the commandline for CI purposes.
@@ -64,13 +63,12 @@ StringBuilder testFilesGlob =new StringBuilder(testsPath);
 testFilesGlob =testFilesGlob.Append("/**/bin/");
 testFilesGlob =testFilesGlob.Append(configuration);
 testFilesGlob =testFilesGlob.Append("/*.Tests*.dll");
-IEnumerable<FilePath> allTestFiles =GetFiles(testFilesGlob.ToString());
-var filteredTestFiles =allTestFiles.Select(x =>x.FullPath).Where(x =>!x.Contains("Domain"));
+var allTestFiles =GetFiles(testFilesGlob.ToString());
 var settings =new NUnit3Settings();
 settings.ErrorOutputFile =System.IO.Path.Combine(testResultsPath, "TestErrors.xml");
 settings.OutputFile =System.IO.Path.Combine(testResultsPath, "TestOutput.xml");
 settings.Results =System.IO.Path.Combine(testResultsPath, "Results.xml");
-NUnit3(filteredTestFiles, settings);
+NUnit3(allTestFiles, settings);
 });
 
 Task("Build")
