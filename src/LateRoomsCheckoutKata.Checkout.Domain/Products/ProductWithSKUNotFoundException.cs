@@ -11,15 +11,22 @@ namespace LateRoomsCheckoutKata.Checkout.Domain.Products
     /// </remarks>
     public class ProductWithSKUNotFoundException : Exception
     {
-        public ProductWithSKUNotFoundException()
-        {
-        }
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProductWithSKUNotFoundException"/> class.
+        /// </summary>
+        /// <param name="sku">The stock keeping unit that could not be found.</param>
         public ProductWithSKUNotFoundException(string sku)
             : base(CheckSKUIsValid(sku))
         {
         }
-
+        
+        /// <summary>
+        /// Ensure the stock keeping unit passed in is not <c>null</c> or an empty <c>string</c>.
+        /// </summary>
+        /// <param name="sku">The stock keeping unit to validate.</param>
+        /// <returns>The formatted message containing the invalid stock keeping unit to pass to the <see cref="Exception"/>s constructor.</returns>
+        ///<exception cref="ArgumentNullException">The <paramref name="sku"/> passed in is <c>null</c>.</exception>
+        ///<exception cref="ArgumentException">The <paramref name="sku"/> passed in is an empty string.></exception>
         private static string CheckSKUIsValid(string sku)
         {
             if (sku == null)
