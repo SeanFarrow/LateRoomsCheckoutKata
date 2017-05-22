@@ -9,5 +9,11 @@ namespace LateRoomsCheckoutKata.Checkout.Domain.Products
     /// </remarks>
     public class ProductWithSKUNotFoundException : Exception
     {
+        public ProductWithSKUNotFoundException()
+        {
+        }
+        public ProductWithSKUNotFoundException(string sku)
+        {
+        }
     }
 }

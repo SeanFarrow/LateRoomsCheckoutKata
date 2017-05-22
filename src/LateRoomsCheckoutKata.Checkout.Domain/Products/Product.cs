@@ -7,5 +7,5 @@ namespace LateRoomsCheckoutKata.Checkout.Domain.Products
 {
     public class Product
     {
-    }
+        }
 }
