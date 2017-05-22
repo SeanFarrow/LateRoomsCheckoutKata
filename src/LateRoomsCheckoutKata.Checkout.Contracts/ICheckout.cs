@@ -9,6 +9,8 @@
         /// Scan an item and add it to the list of products we are purchasing.
         /// </summary>
         /// <param name="item">The SKU of the item we want to purchase.</param>
+        ///<exception cref="ArgumentNullException">The <paramref name="item"/> passed in is <c>null</c>.</exception>
+        ///<exception cref="ArgumentException">The <paramref name="item"/> passed in is an empty string.></exception>
         /// <exception cref="ProductWithSKUNotFoundException"><paramref name="item"/> The passed in item is no longer available inthe supermarket.</exception>
         void Scan(string item);
         
