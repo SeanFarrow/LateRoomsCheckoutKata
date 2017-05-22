@@ -31,7 +31,7 @@ namespace LateRoomsCheckoutKata.Checkout.Domain.Products
                 throw new ArgumentException("An empty sku has been passed in. The sku cannot be an empty string.", "sku");
             }
             
-            throw new NotImplementedException();
+            return string.Format("The product with stock keeping unit '{0}' could not be found in the product repository.", sku);
         }
     }
 }

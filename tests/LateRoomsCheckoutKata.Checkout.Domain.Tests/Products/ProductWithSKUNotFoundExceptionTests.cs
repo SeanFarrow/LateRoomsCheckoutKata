@@ -28,7 +28,7 @@ namespace LateRoomsCheckoutKata.Checkout.Domain.Tests.Products
             }
             
             [Test]
-            public void ShouldAssignTheMessgePropertoWhenTheSKUPassedInIsNotNullOrEmpty()
+            public void ShouldAssignTheMessagePropertyWhenTheSKUPassedInIsNotNullOrEmpty()
             {
                 var createdException =new ProductWithSKUNotFoundException("a");
                 createdException.Message.Should()
