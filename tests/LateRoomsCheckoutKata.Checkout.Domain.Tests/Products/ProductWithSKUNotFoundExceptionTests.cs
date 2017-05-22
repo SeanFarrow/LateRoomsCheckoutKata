@@ -18,7 +18,14 @@ namespace LateRoomsCheckoutKata.Checkout.Domain.Tests.Products
             {
                 Action act = () => new ProductWithSKUNotFoundException(null);
                 act.ShouldThrow<ArgumentNullException>().And.Message.Should().Be("A null sku has been passed in. The sku cannot be null.\r\nParameter name: sku");
+            }
+            
+            [Test]
+            public void ShouldThrowAnArgumentNullExceptionWithAnAppropriateMessageWhenTheMessageCannotBeAssignedBecauseTheSKUStringPassedInIsEmpty()
+            {
+                Action act = () => new ProductWithSKUNotFoundException(String.Empty);
+                act.ShouldThrow<ArgumentException>().And.Message.Should().Be("An empty sku has been passed in. The sku cannot be an empty string.\r\nParameter name: sku");
             }        
-        }
+       }
     }
 }
