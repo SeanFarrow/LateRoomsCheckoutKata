@@ -56,6 +56,14 @@ namespace LateRoomsCheckoutKata.Checkout
                 throw new ArgumentException("An empty item has been passed in. The item cannot be an empty string.", "item");
             }
 
+            try
+            {
+                var product = this._productRepository.FindProductBySKU(item);
+            }
+            catch (ProductWithSKUNotFoundException pnex)
+            {
+                
+            }
             throw new NotImplementedException();
         }
         
