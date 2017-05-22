@@ -47,6 +47,7 @@ namespace LateRoomsCheckoutKata.Checkout.Domain.Tests.Products
                 uint unitPrice = 50;
                 var expectedProduct = new Product(sku, unitPrice);
                 var newProduct = new Product(sku, unitPrice);
+                //Here we use the ShouldBeEquivalentTo method to obviate the need for us to implement the IEquatable interface or override Equals/GetHashcode from the Object base class.
                 newProduct.ShouldBeEquivalentTo(expectedProduct);
             }
         }
