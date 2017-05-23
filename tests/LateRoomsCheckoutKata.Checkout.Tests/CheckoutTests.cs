@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using NSubstitute;
@@ -39,8 +40,19 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                     .And.Message.Should()
                     .Be("A null product discount rule repository has been passed in. The product discount rule repository cannot be null.\r\nParameter name: productDiscountRuleRepository");
             }
-            
+
             [Test]
+            public void ShouldSelfAssignTheTillFieldToANewDictionaryWhenThePassedInTillIsNull()
+            {
+                var productRepository = Substitute.For<IProductRepository>();
+                var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
+                IDictionary<string, uint> till = null;
+                var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
+                //Here we use reflection to check a private field. This isn't strictly unit testing, but given we don't need access to the till from the outside, there is no property available.
+                checkout.GetType().GetField("_till").Should().NotBeNull();
+            }
+            
+                [Test]
             public void ShouldConstructACheckoutWhenValidProductAndProductDiscountRuleRepositoriesArePassedIn()
             {
                 var productRepository = Substitute.For<IProductRepository>();
