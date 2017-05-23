@@ -166,6 +166,21 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                 var checkout = new Checkout(productRepository, productDiscountRuleRepository);
                 checkout.GetTotalPrice().Should().Be(0);
             }
+
+            [Test]
+            [TestCase("a", 50)]
+            [TestCase("b", 30)]
+            [TestCase("c", 20)]
+            [TestCase("d", 15)]
+            public void ShouldReturnThePriceOfASingleItemWhenOnlyOneItemHasBeenScannedThroughTheTill(string sku, uint unitPrice)
+            {
+                var product = new Product(sku, unitPrice);
+                var till = new Dictionary<Product, uint> { { product, 1 } };
+                var productRepository = Substitute.For<IProductRepository>();
+                var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
+                var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
+                checkout.GetTotalPrice().Should().Be(Convert.ToInt32(unitPrice));
+            }
         }
     }
 }
