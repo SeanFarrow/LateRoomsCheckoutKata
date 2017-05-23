@@ -42,16 +42,8 @@ namespace LateRoomsCheckoutKata.Checkout
         {
             this._productRepository = productRepository;
             this._productDiscountRuleRepository = productDiscountRuleRepository;
-
-            if (till == null)
-            {
-                this._till = new Dictionary<string, uint>();
+            this._till = till ?? new Dictionary<string, uint>();
             }
-            else
-            {
-                this._till = till;
-            }
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Checkout"/> class.
