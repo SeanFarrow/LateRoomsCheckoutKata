@@ -76,6 +76,11 @@ namespace LateRoomsCheckoutKata.Checkout
         ///<InheritDoc/>
         public int GetTotalPrice()
         {
+            if (this._till.Count() ==1)
+            {
+                return Convert.ToInt32(this._till.Single().Key.UnitPrice);
+            }
+            
             return 0;
         }
     }
