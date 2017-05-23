@@ -46,7 +46,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             {
                 var productRepository = Substitute.For<IProductRepository>();
                 var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
-                IDictionary<string, uint> till = null;
+                IDictionary<Product, uint> till = null;
                 var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
                 //Here we use reflection to check a private field. This isn't strictly unit testing, but given we don't need access to the till from the outside, there is no property available.
                 checkout.GetType().GetField("_till", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(checkout).Should().NotBeNull();
@@ -57,7 +57,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             {
                 var productRepository = Substitute.For<IProductRepository>();
                 var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
-                var till = new Dictionary<string, uint>();
+                var till = new Dictionary<Product, uint>();
                 var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
                 //Here we use reflection to check a private field. This isn't strictly unit testing, but given we don't need access to the till from the outside, there is no property available.
                 checkout.GetType()
