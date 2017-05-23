@@ -86,7 +86,9 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             [Test]
             public void ShouldThrowAnArgumentNullExceptionWithAnAppropriateMessageWhenTheItemBeingScannedIsNull()
             {
-                var checkout = new Checkout();
+                var productRepository = Substitute.For<IProductRepository>();
+                var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
+                var checkout = new Checkout(productRepository, productDiscountRuleRepository);
                 Action act = () => checkout.Scan(null);
                 act.ShouldThrow<ArgumentNullException>()
                     .And.Message.Should()
@@ -96,7 +98,9 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             [Test]
             public void ShouldThrowAnArgumentExceptionWithAnAppropriateMessageWhenTheItemBeingScannedIsAnEmptyString()
             {
-                var checkout = new Checkout();
+                var productRepository = Substitute.For<IProductRepository>();
+                var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
+                var checkout = new Checkout(productRepository, productDiscountRuleRepository);
                 Action act = () => checkout.Scan(String.Empty);
                 act.ShouldThrow<ArgumentException>()
                     .And.Message.Should()
