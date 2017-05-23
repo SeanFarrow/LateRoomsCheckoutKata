@@ -168,15 +168,16 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             }
 
             [Test]
-            [TestCase("a", 50)]
-            [TestCase("b", 30)]
-            [TestCase("c", 20)]
-            [TestCase("d", 15)]
+            [TestCase("a", 50u)]
+            [TestCase("b", 30u)]
+            [TestCase("c", 20u)]
+            [TestCase("d", 15u)]
             public void ShouldReturnThePriceOfASingleItemWhenOnlyOneItemHasBeenScannedThroughTheTill(string sku, uint unitPrice)
             {
                 var product = new Product(sku, unitPrice);
                 var till = new Dictionary<Product, uint> { { product, 1 } };
                 var productRepository = Substitute.For<IProductRepository>();
+                productRepository.FindProductBySKU(sku).Returns(product);
                 var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
                 var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
                 checkout.GetTotalPrice().Should().Be(Convert.ToInt32(unitPrice));
