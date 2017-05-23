@@ -55,8 +55,18 @@ namespace LateRoomsCheckoutKata.Checkout
             try
             {
                 var product = this._productRepository.FindProductBySKU(item);
-                this._till.Add(product, 1);
-            }
+                uint currentQuantity = 0;
+                if (!this._till.TryGetValue(product, out currentQuantity))
+                {
+                    //The product doesn't exist in the till so add it with a quantity of 1.
+                    this._till.Add(product, 1);
+                }
+                else
+                {
+                    //the product has been scanned at least once, so increment the quantity.
+                    this._till[product] = ++currentQuantity;
+                }
+                }
             catch (ProductWithSKUNotFoundException)
             {
                 throw;
