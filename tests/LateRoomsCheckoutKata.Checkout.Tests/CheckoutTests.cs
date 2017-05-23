@@ -123,7 +123,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             public void ShouldAddTheProductToTheTillWithAQuantityOf1WhenTheProductIsAvailableInTheSupermarketAndHasNotBeenScannedPreviously()
             {
                 var sku = "a";
-                var unitPrice = 50u;
+                var unitPrice = 50;
                 var expectedProduct = new Product(sku, unitPrice);
                 var expectedProductAndQuantity = new KeyValuePair<Product, uint>(expectedProduct, 1);
                 var productRepository = Substitute.For<IProductRepository>();
@@ -139,7 +139,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             public void ShouldUpdateTheQuantityOfTheProductInTheTillWhenTheProductIsAvailableInTheSupermarketAndHasPreviouslyBeenScanned()
             {
                 var sku = "a";
-                var unitPrice = 50u;
+                var unitPrice = 50;
                 var expectedProduct = new Product(sku, unitPrice);
                 var expectedProductAndQuantity = new KeyValuePair<Product, uint>(expectedProduct, 2);
                 var productRepository = Substitute.For<IProductRepository>();
@@ -168,11 +168,11 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             }
 
             [Test]
-            [TestCase("a", 50u)]
-            [TestCase("b", 30u)]
-            [TestCase("c", 20u)]
-            [TestCase("d", 15u)]
-            public void ShouldReturnThePriceOfASingleItemWhenOnlyOneItemHasBeenScannedThroughTheTill(string sku, uint unitPrice)
+            [TestCase("a", 50)]
+            [TestCase("b", 30)]
+            [TestCase("c", 20)]
+            [TestCase("d", 15)]
+            public void ShouldReturnThePriceOfASingleItemWhenOnlyOneItemHasBeenScannedThroughTheTill(string sku, int unitPrice)
             {
                 var product = new Product(sku, unitPrice);
                 var till = new Dictionary<Product, uint> { { product, 1 } };

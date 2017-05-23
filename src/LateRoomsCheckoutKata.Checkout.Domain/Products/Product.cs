@@ -7,7 +7,7 @@ namespace LateRoomsCheckoutKata.Checkout.Domain.Products
 {
     public class Product
     {
-            public Product(string sku, uint unitPrice)
+            public Product(string sku, int unitPrice)
             {
                 if (sku == null)
                 {
@@ -32,6 +32,6 @@ namespace LateRoomsCheckoutKata.Checkout.Domain.Products
         /// <summary>
         /// The <see cref="Product"/>s price.
         /// </summary>
-        public uint UnitPrice { get; }
+        public int UnitPrice { get; }
     }
 }
