@@ -15,6 +15,7 @@ namespace LateRoomsCheckoutKata.Checkout
     {
         private IProductRepository _productRepository;
         private IProductDiscountRuleRepository _productDiscountRuleRepository;
+        private IDictionary<string, uint> _till;
         
         /// <summary>
         /// Initializes a new instance of the <see cref="Checkout"/> class.
@@ -41,7 +42,11 @@ namespace LateRoomsCheckoutKata.Checkout
         {
             this._productRepository = productRepository;
             this._productDiscountRuleRepository = productDiscountRuleRepository;
-            throw new NotImplementedException();
+            
+            if (till == null)
+            {
+                this._till = new Dictionary<string, uint>();
+            }
         }
 
         /// <summary>
