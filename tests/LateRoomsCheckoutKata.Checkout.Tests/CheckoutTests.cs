@@ -151,5 +151,21 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                 till.Should().Contain(expectedProductAndQuantity);
             }
         }
+        
+        /// <summary>
+        /// This class contains all tests for the GetTotalPrice method.
+        /// </summary>
+        [TestFixture]
+        public class TheGetTotalPriceMethod
+        {
+            [Test] 
+            public void ShouldReturn0WhenNothingHasBeenScanned()
+            {
+                var productRepository = Substitute.For<IProductRepository>();
+                var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
+                var checkout = new Checkout(productRepository, productDiscountRuleRepository);
+                checkout.GetTotalPrice().Should().Be(0);
+            }
+        }
     }
 }
