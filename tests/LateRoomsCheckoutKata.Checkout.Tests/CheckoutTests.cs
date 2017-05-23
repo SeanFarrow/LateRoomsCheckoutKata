@@ -118,6 +118,21 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                 Action act = () => checkout.Scan(sku);
                 act.ShouldThrow<ProductWithSKUNotFoundException>().And.Message.Should().Be("The product with stock keeping unit 'a' could not be found in the product repository.");
             }
+
+            [Test]
+            public void ShouldAddTheProductToTheTillWithAQuantityOf1WhenTheProductIsAvailableInTheSupermarketAndHasNotBeenScannedPreviously()
+            {
+                var sku = "a";
+                var unitPrice = 50u;
+                var expectedProduct = new Product(sku, unitPrice);
+                var expectedProductAndQuantity = new KeyValuePair<Product, uint>(expectedProduct, 1);
+                var productRepository = Substitute.For<IProductRepository>();
+                productRepository.FindProductBySKU(sku).Returns(expectedProduct);
+                var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
+                var till = new Dictionary<Product, uint>();
+                var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
+                till.Should().Contain(expectedProductAndQuantity);
+            }
         }
     }
 }
