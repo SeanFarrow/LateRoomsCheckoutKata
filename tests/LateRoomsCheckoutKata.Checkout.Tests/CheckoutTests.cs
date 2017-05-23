@@ -134,6 +134,22 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                 checkout.Scan(sku);
                 till.Should().Contain(expectedProductAndQuantity);
             }
+            
+            [Test]
+            public void ShouldUpdateTheQuantityOfTheProductInTheTillWhenTheProductIsAvailableInTheSupermarketAndHasPreviouslyBeenScanned()
+            {
+                var sku = "a";
+                var unitPrice = 50u;
+                var expectedProduct = new Product(sku, unitPrice);
+                var expectedProductAndQuantity = new KeyValuePair<Product, uint>(expectedProduct, 2);
+                var productRepository = Substitute.For<IProductRepository>();
+                productRepository.FindProductBySKU(sku).Returns(expectedProduct);
+                var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
+                var till = new Dictionary<Product, uint> { { expectedProduct, 1}}; 
+                var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
+                checkout.Scan(sku);
+                till.Should().Contain(expectedProductAndQuantity);
+            }
         }
     }
 }
