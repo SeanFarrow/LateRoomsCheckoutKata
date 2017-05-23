@@ -42,10 +42,14 @@ namespace LateRoomsCheckoutKata.Checkout
         {
             this._productRepository = productRepository;
             this._productDiscountRuleRepository = productDiscountRuleRepository;
-            
+
             if (till == null)
             {
                 this._till = new Dictionary<string, uint>();
+            }
+            else
+            {
+                this._till = till;
             }
         }
 
