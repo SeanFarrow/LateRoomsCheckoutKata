@@ -131,6 +131,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                 var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
                 var till = new Dictionary<Product, uint>();
                 var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
+                checkout.Scan(sku);
                 till.Should().Contain(expectedProductAndQuantity);
             }
         }
