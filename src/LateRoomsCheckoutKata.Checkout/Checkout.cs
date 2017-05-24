@@ -129,7 +129,7 @@ namespace LateRoomsCheckoutKata.Checkout
                     else
                     {
                         //no discount available.
-                        totalPrice += scannedProduct.Key.UnitPrice;
+                        totalPrice += scannedProduct.Key.UnitPrice *scannedProduct.Value;
                     }
                 }
                 return totalPrice;
