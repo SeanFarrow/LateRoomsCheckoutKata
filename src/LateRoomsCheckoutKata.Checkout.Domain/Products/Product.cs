@@ -17,13 +17,11 @@ namespace LateRoomsCheckoutKata.Checkout.Domain.Products
                 {
                     throw new ArgumentException("An empty sku has been passed in. The sku cannot be an empty string.", "sku");
                 }
-                else if (unitPrice == 0)
+                else if (unitPrice <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("unitPrice", "0 has been passed in as the unit price.The unit price must be 1 or greater.");
-                }
-                else if (unitPrice < 0)
-                {
-                    throw new ArgumentOutOfRangeException("unitPrice", "A negative number has been passed in as the unit price.The unit price must be possitive.");
+                    throw new ArgumentOutOfRangeException(
+                        "unitPrice",
+                        "A unit price less than or equal to 0 has been passed in.The unit price must be positive.");
                 }
                 
                 this.SKU = sku;

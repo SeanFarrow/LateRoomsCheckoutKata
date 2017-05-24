@@ -37,7 +37,7 @@ namespace LateRoomsCheckoutKata.Checkout.Domain.Tests.Products
                 string sku = "a";
                 int unitPrice = 0;
                 Action act = () => new Product(sku, unitPrice);
-                act.ShouldThrow<ArgumentOutOfRangeException>().And.Message.Should().Be("0 has been passed in as the unit price.The unit price must be 1 or greater.\r\nParameter name: unitPrice");
+                act.ShouldThrow<ArgumentOutOfRangeException>().And.Message.Should().Be("A unit price less than or equal to 0 has been passed in.The unit price must be positive.\r\nParameter name: unitPrice");
             }
 
             [Test]
@@ -46,7 +46,7 @@ namespace LateRoomsCheckoutKata.Checkout.Domain.Tests.Products
                 string sku = "a";
                 int unitPrice = -200;
                 Action act = () => new Product(sku, unitPrice);
-                act.ShouldThrow<ArgumentOutOfRangeException>().And.Message.Should().Be("A negative number has been passed in as the unit price.The unit price must be possitive.\r\nParameter name: unitPrice");
+                act.ShouldThrow<ArgumentOutOfRangeException>().And.Message.Should().Be("A unit price less than or equal to 0 has been passed in.The unit price must be positive.\r\nParameter name: unitPrice");
             }
 
             [Test]
