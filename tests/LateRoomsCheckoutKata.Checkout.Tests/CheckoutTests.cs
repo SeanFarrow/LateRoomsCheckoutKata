@@ -203,6 +203,14 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                 var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
                 checkout.GetTotalPrice().Should().Be(Convert.ToInt32(expectedPrice));
             }
+
+            [Test]
+            [TestCase("a", 5, 3, 50, 40)]
+            [TestCase("b", 7, 2, 30, 50)]
+            public void ShouldReturnThePriceWhenASingleProductIsScannedAndTheQuantityOfTheScannedProductHasAtLeastSomePortionThatCanBeDiscounted(string sku, int numberOfProductsScanned, int quantityForDiscount, int unitPrice, int percentageReduction)
+            {
+                
+            }
         }
     }
 }
