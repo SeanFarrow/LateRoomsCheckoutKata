@@ -5,5 +5,6 @@
     /// </summary>
     public interface IProductDiscountRuleRepository
     {
+        IProductDiscountRule GetDiscountRuleForSKU(string sku);
     }
 }

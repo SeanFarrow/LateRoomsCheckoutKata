@@ -184,19 +184,19 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             }
             
             [Test]
-            [TestCase("a", 3, 50u, 40)]
-            [TestCase("b", 3, 30u, 50)]
-            public void ShouldReturnThePriceWhenASingleProductIsScannedMultipleTimesAndTheNumberOfTimesTheProductWasScannedEquatesExactlyToTheNumberOfItemsRequiredForADiscount(string sku, uint quantityForDiscount, uint unitPrice, uint percentageReduction)
+            [TestCase("a", 3, 50, 40)]
+            [TestCase("b", 3, 30, 50)]
+            public void ShouldReturnThePriceWhenASingleProductIsScannedMultipleTimesAndTheNumberOfTimesTheProductWasScannedEquatesExactlyToTheNumberOfItemsRequiredForADiscount(string sku, int quantityForDiscount, int unitPrice, int percentageReduction)
             {
                 var product = new Product(sku, unitPrice);
-                var till = new Dictionary<Product, uint> { { product, quantityForDiscount } };
+                var till = new Dictionary<Product, int> { { product, quantityForDiscount } };
                 var productRepository = Substitute.For<IProductRepository>();
                 productRepository.FindProductBySKU(sku).Returns(product);
                 var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
                 var productDiscountRule = Substitute.For<IProductDiscountRule>();
                 productDiscountRule.QuantityToDiscount.Returns(quantityForDiscount);
-                int expectedPrice = unitPrice * numberOfScannedProducts - (unitPrice / 100 * percentageReduction);
-                productDiscountRule.CalculateDiscount(numberOfScannedProducts, unitPrice).Returns(expectedPrice);
+                int expectedPrice = unitPrice * quantityForDiscount- (unitPrice / 100 * percentageReduction);
+                productDiscountRule.CalculateDiscount(quantityForDiscount, unitPrice).Returns(expectedPrice);
                 productDiscountRuleRepository.GetDiscountRuleForSKU(sku).Returns(productDiscountRule);
                 var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
                 checkout.GetTotalPrice().Should().Be(Convert.ToInt32(expectedPrice));

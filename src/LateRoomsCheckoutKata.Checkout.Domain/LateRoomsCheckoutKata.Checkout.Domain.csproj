@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Products\IProductDiscountRule.cs" />
     <Compile Include="Products\IProductRepository.cs" />
     <Compile Include="Products\IProductDiscountRuleRepository.cs" />
     <Compile Include="Products\Product.cs" />
