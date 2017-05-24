@@ -341,7 +341,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                 productDiscountRuleRepository.GetDiscountRuleForSKU(productA.SKU).Returns(productADiscountRule);
                 var productBDiscountRule = Substitute.For<IProductDiscountRule>();
                 productBDiscountRule.QuantityToDiscount.Returns(productBDiscountQuantity);
-                productBDiscountRule.CalculateDiscount(scannedQuantity, productB.UnitPrice).Returns(50);
+                productBDiscountRule.CalculateDiscount(scannedQuantity, productB.UnitPrice).Returns(90);
                 productDiscountRuleRepository.GetDiscountRuleForSKU(productB.SKU).Returns(productBDiscountRule);
                 var expectedTotalPrice = 350;
                 var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
