@@ -76,40 +76,6 @@ namespace LateRoomsCheckoutKata.Checkout
         ///<InheritDoc/>
         public int GetTotalPrice()
         {
-            if (this._till.Count() == 1)
-            {
-                var productWithRequiredQuantity = this._till.Single();
-                var discountRule =
-                    this._productDiscountRuleRepository.GetDiscountRuleForSKU(productWithRequiredQuantity.Key.SKU);
-                if (discountRule == null)
-                {
-                    return productWithRequiredQuantity.Key.UnitPrice*productWithRequiredQuantity.Value;
-                }
-                else
-                {
-                    //We are calculating a discount for a product.
-                    if (productWithRequiredQuantity.Value == discountRule.QuantityToDiscount)
-                    {
-                        //The number of this product scanned exactly equals  the quantity to discount for the product.
-                        return discountRule.CalculateDiscount(
-                            productWithRequiredQuantity.Value,
-                            productWithRequiredQuantity.Key.UnitPrice);
-                    }
-                    else
-                    {
-                        //The number of this product scanned has at least some portion that can be discounted.
-                        int undiscountablePortion = productWithRequiredQuantity.Value % discountRule.QuantityToDiscount;
-                        int totalUndiscountedProductPrice =
-                            productWithRequiredQuantity.Key.UnitPrice * undiscountablePortion;
-                        return discountRule.CalculateDiscount(
-                                   productWithRequiredQuantity.Value,
-                                   productWithRequiredQuantity.Key.UnitPrice) + totalUndiscountedProductPrice;
-                    }
-                }
-            }
-            else
-            {
-                //multiple products.
                 int totalPrice = 0;
                 foreach (var scannedProduct in this._till)
                 {
@@ -140,10 +106,6 @@ namespace LateRoomsCheckoutKata.Checkout
                     }
                 }
                 return totalPrice;
-            }
-
-            
-    return 0;
         }
     }
 }
