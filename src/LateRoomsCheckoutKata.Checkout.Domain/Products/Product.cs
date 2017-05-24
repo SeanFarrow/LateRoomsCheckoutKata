@@ -21,7 +21,11 @@ namespace LateRoomsCheckoutKata.Checkout.Domain.Products
                 {
                     throw new ArgumentOutOfRangeException("unitPrice", "0 has been passed in as the unit price.The unit price must be 1 or greater.");
                 }
-
+                else if (unitPrice < 0)
+                {
+                    throw new ArgumentOutOfRangeException("unitPrice", "A negative number has been passed in as the unit price.The unit price must be possitive.");
+                }
+                
                 this.SKU = sku;
                 this.UnitPrice = unitPrice;
             }
