@@ -15,7 +15,7 @@ namespace LateRoomsCheckoutKata.Checkout
     {
         private IProductRepository _productRepository;
         private IProductDiscountRuleRepository _productDiscountRuleRepository;
-        private IDictionary<Product, uint> _till;
+        private IDictionary<Product, int> _till;
         
         /// <summary>
         /// Initializes a new instance of the <see cref="Checkout"/> class.
@@ -24,7 +24,7 @@ namespace LateRoomsCheckoutKata.Checkout
         /// <param name="productDiscountRuleRepository">The repository providing access to the discount rules for <see cref="Product"/>s in the supermarket.</param>
         /// <param name="till">The till to be used when unit testing the class. If this is <c>null</c> a new till will be assigned to the private field in the constructor.</param>
         ///<exception cref="ArgumentNullException">The <paramref name="productRepository"/> or <paramref name="productDiscountRuleRepository"/> passed in are <c>null</c>.</exception>
-        public Checkout(IProductRepository productRepository, IProductDiscountRuleRepository productDiscountRuleRepository, IDictionary<Product, uint> till =null)
+        public Checkout(IProductRepository productRepository, IProductDiscountRuleRepository productDiscountRuleRepository, IDictionary<Product, int> till =null)
         {
             if (productRepository == null)
             {
@@ -37,7 +37,7 @@ namespace LateRoomsCheckoutKata.Checkout
             
             this._productRepository = productRepository;
             this._productDiscountRuleRepository = productDiscountRuleRepository;
-            this._till = till ?? new Dictionary<Product, uint>();
+            this._till = till ?? new Dictionary<Product, int>();
             }
 
         ///<InheritDoc/>
@@ -55,7 +55,7 @@ namespace LateRoomsCheckoutKata.Checkout
             try
             {
                 var product = this._productRepository.FindProductBySKU(item);
-                uint currentQuantity = 0;
+                int currentQuantity = 0;
                 if (!this._till.TryGetValue(product, out currentQuantity))
                 {
                     //The product doesn't exist in the till so add it with a quantity of 1.
