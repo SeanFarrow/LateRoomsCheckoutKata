@@ -86,9 +86,18 @@ namespace LateRoomsCheckoutKata.Checkout
                 }
                 else
                 {
+                    //We are calculating a doscount for a product.
                     if (productWithRequiredQuantity.Value == discountRule.QuantityToDiscount)
                     {
+                        //The number of this product scanned exactly equals  the quantity to discount for the product.
                         return discountRule.CalculateDiscount(productWithRequiredQuantity.Value, productWithRequiredQuantity.Key.UnitPrice);
+                    }
+                    else
+                    {
+                        //The number of this product scanned has at least some portion that can be discounted.
+                        int undiscountablePortion = productWithRequiredQuantity.Value% discountRule.QuantityToDiscount;
+                        int totalUndiscountedProductPrice = productWithRequiredQuantity.Key.UnitPrice* undiscountablePortion;
+                        return discountRule.CalculateDiscount(productWithRequiredQuantity.Value, productWithRequiredQuantity.Key.UnitPrice) + totalUndiscountedProductPrice;
                     }
                 }
             }

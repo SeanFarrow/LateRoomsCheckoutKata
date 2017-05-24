@@ -210,7 +210,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             public void ShouldReturnThePriceWhenASingleProductIsScannedAndTheQuantityOfTheScannedProductHasAtLeastSomePortionThatCanBeDiscounted(string sku, int numberOfProductsScanned, int quantityForDiscount, int unitPrice, int percentageReduction)
             {
                 var product = new Product(sku, unitPrice);
-                var till = new Dictionary<Product, int> { { product, quantityForDiscount } };
+                var till = new Dictionary<Product, int> { { product, numberOfProductsScanned } };
                 var productRepository = Substitute.For<IProductRepository>();
                 productRepository.FindProductBySKU(sku).Returns(product);
                 var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
