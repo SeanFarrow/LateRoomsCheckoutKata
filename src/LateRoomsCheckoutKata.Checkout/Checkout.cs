@@ -126,6 +126,11 @@ namespace LateRoomsCheckoutKata.Checkout
                                 scannedProduct.Key.UnitPrice);
                         }
                     }
+                    else
+                    {
+                        //no discount available.
+                        totalPrice += scannedProduct.Key.UnitPrice;
+                    }
                 }
                 return totalPrice;
             }

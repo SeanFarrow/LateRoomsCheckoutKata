@@ -236,8 +236,8 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                 var productB = new Product("b", 30);
                 var till = new Dictionary<Product, int>()
                                {
-                                   { productA, 2 },
-                                   { productB, 2}
+                                   { productA, 1},
+                                   { productB, 1}
                                };
 
                 var productRepository = Substitute.For<IProductRepository>();
@@ -248,7 +248,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                 productDiscountRuleRepository.GetDiscountRuleForSKU(productA.SKU).Returns(rule);
                 productDiscountRuleRepository.GetDiscountRuleForSKU(productB.SKU).Returns(rule);
                 var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
-                checkout.GetTotalPrice().Should().Be(130);
+                checkout.GetTotalPrice().Should().Be(80);
             }
 
             [Test]
