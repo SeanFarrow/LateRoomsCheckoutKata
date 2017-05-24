@@ -227,6 +227,34 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                 var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
                 checkout.GetTotalPrice().Should().Be(Convert.ToInt32(expectedPrice));
             }
+
+            [Test]
+            public void ShouldReturnThePriceWhenMultipleProductsAreScannedMultipleTimesAndTheNumberOfTimesTheProductsAreScannedEquatesExactlyToTheNumberOfItemsRequiredForADiscountForTheParticularProduct()
+            {
+                //Construct a till with multiple products.
+                var productA = new Product("A", 50);
+                var productB = new Product("b", 30);
+                var till = new Dictionary<Product, int>()
+                               {
+                                   { new Product("A", 50), 3 },
+                                   { new Product("b", 30), 2}
+                               };
+                
+                var productRepository = Substitute.For<IProductRepository>();
+                productRepository.FindProductBySKU("a").Returns(productA);
+                productRepository.FindProductBySKU("b").Returns(productB);
+                var discountRuleProductA = Substitute.For<IProductDiscountRule>();
+                discountRuleProductA.QuantityToDiscount.Returns(3);
+                discountRuleProductA.CalculateDiscount(3, productA.UnitPrice).Returns(130);
+                var discountRuleProductB = Substitute.For<IProductDiscountRule>();
+                discountRuleProductB.QuantityToDiscount.Returns(2);
+                discountRuleProductB.CalculateDiscount(2, productB.UnitPrice).Returns(45);
+                var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
+                productDiscountRuleRepository.GetDiscountRuleForSKU(productA.SKU).Returns(discountRuleProductA);
+                productDiscountRuleRepository.GetDiscountRuleForSKU(productB.SKU).Returns(discountRuleProductB);
+                var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
+                checkout.GetTotalPrice().Should().Be(175);
+            }
         }
     }
 }
