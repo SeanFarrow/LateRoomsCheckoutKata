@@ -227,6 +227,29 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                 var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
                 checkout.GetTotalPrice().Should().Be(Convert.ToInt32(expectedPrice));
             }
+            
+            [Test]
+            public void ShouldReturnTheTotalPriceWhenMultipleProductsAreScannedOnceEach()
+            {
+                //Construct a till with multiple products.
+                var productA = new Product("A", 50);
+                var productB = new Product("b", 30);
+                var till = new Dictionary<Product, int>()
+                               {
+                                   { productA, 2 },
+                                   { productB, 2}
+                               };
+
+                var productRepository = Substitute.For<IProductRepository>();
+                productRepository.FindProductBySKU("a").Returns(productA);
+                productRepository.FindProductBySKU("b").Returns(productB);
+                var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
+                IProductDiscountRule rule = null;
+                productDiscountRuleRepository.GetDiscountRuleForSKU(productA.SKU).Returns(rule);
+                productDiscountRuleRepository.GetDiscountRuleForSKU(productB.SKU).Returns(rule);
+                var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
+                checkout.GetTotalPrice().Should().Be(130);
+            }
 
             [Test]
             public void ShouldReturnThePriceWhenMultipleProductsAreScannedMultipleTimesAndTheNumberOfTimesTheProductsAreScannedEquatesExactlyToTheNumberOfItemsRequiredForADiscountForTheParticularProduct()
