@@ -172,7 +172,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             [TestCase("b", 30)]
             [TestCase("c", 20)]
             [TestCase("d", 15)]
-            public void ShouldReturnThePriceOfASingleItemWhenOnlyOneItemHasBeenScannedThroughTheTill(string sku, int unitPrice)
+            public void ShouldReturnTheTotalPriceOfASingleItemWhenOnlyOneItemHasBeenScannedThroughTheTill(string sku, int unitPrice)
             {
                 var product = new Product(sku, unitPrice);
                 var till = new Dictionary<Product, int> { { product, 1 } };
@@ -204,7 +204,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             [Test]
             [TestCase("a", 3, 50, 40)]
             [TestCase("b", 2, 30, 50)]
-            public void ShouldReturnThePriceWhenASingleProductIsScannedMultipleTimesAndTheNumberOfTimesTheProductWasScannedEquatesExactlyToTheNumberOfItemsRequiredForADiscount(string sku, int quantityForDiscount, int unitPrice, int percentageReduction)
+            public void ShouldReturnTheTotalPriceWhenASingleProductIsScannedMultipleTimesAndTheNumberOfTimesTheProductWasScannedEquatesExactlyToTheNumberOfItemsRequiredForADiscount(string sku, int quantityForDiscount, int unitPrice, int percentageReduction)
             {
                 var product = new Product(sku, unitPrice);
                 var till = new Dictionary<Product, int> { { product, quantityForDiscount } };
@@ -223,7 +223,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             [Test]
             [TestCase("a", 8, 3, 50, 40)]
             [TestCase("b", 7, 2, 30, 50)]
-            public void ShouldReturnThePriceWhenASingleProductIsScannedAndTheQuantityOfTheScannedProductHasAtLeastSomePortionThatCanBeDiscounted(string sku, int numberOfProductsScanned, int quantityForDiscount, int unitPrice, int percentageReduction)
+            public void ShouldReturnTheTotalPriceWhenASingleProductIsScannedMultipleTimesAndTheQuantityOfTheScannedProductHasAtLeastSomePortionThatCanBeDiscounted(string sku, int numberOfProductsScanned, int quantityForDiscount, int unitPrice, int percentageReduction)
             {
                 var product = new Product(sku, unitPrice);
                 var till = new Dictionary<Product, int> { { product, numberOfProductsScanned } };
@@ -292,7 +292,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             }
 
             [Test]
-            public void ShouldReturnThePriceWhenMultipleProductsAreScannedMultipleTimesAndTheNumberOfTimesTheProductsAreScannedEquatesExactlyToTheNumberOfItemsRequiredForADiscountForTheParticularProduct()
+            public void ShouldReturnTheTotalPriceWhenMultipleProductsAreScannedMultipleTimesAndTheNumberOfTimesTheProductsAreScannedEquatesExactlyToTheNumberOfItemsRequiredForADiscountForTheParticularProduct()
             {
                 //Construct a till with multiple products.
                 var productA = new Product("A", 50);
@@ -317,6 +317,35 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                 productDiscountRuleRepository.GetDiscountRuleForSKU(productB.SKU).Returns(discountRuleProductB);
                 var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
                 checkout.GetTotalPrice().Should().Be(175);
+            }
+            
+            [Test]
+            public void ShouldReturnTheTotalPriceWhenMultipleProductsAreScannedMultipleTimesAndTheQuantityOfAllProductsHaveAPortionThatIsDiscountable()
+            {
+                //Construct a till with multiple products.
+                var productA = new Product("A", 50);
+                var productB = new Product("b", 30);
+                const int scannedQuantity = 5;
+                var till = new Dictionary<Product, int>() { { productA, scannedQuantity}, { productB, scannedQuantity} };
+                var productADiscountPercentage = 40;
+                var productBDiscountPercentage = 50;
+                var productADiscountQuantity = 3;
+                var productBDiscountQuantity = 2;
+                var productRepository = Substitute.For<IProductRepository>();
+                productRepository.FindProductBySKU(productA.SKU).Returns(productA);
+                productRepository.FindProductBySKU(productB.SKU).Returns(productB);
+                var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
+                var productADiscountRule = Substitute.For<IProductDiscountRule>();
+                productADiscountRule.QuantityToDiscount.Returns(productADiscountQuantity);
+                productADiscountRule.CalculateDiscount(scannedQuantity, productA.UnitPrice).Returns(130);
+                productDiscountRuleRepository.GetDiscountRuleForSKU(productA.SKU).Returns(productADiscountRule);
+                var productBDiscountRule = Substitute.For<IProductDiscountRule>();
+                productBDiscountRule.QuantityToDiscount.Returns(productBDiscountQuantity);
+                productBDiscountRule.CalculateDiscount(scannedQuantity, productB.UnitPrice).Returns(50);
+                productDiscountRuleRepository.GetDiscountRuleForSKU(productB.SKU).Returns(productADiscountRule);
+                var expectedTotalPrice = 350;
+                var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
+                checkout.GetTotalPrice().Should().Be(expectedTotalPrice);
             }
         }
     }
