@@ -83,7 +83,7 @@ namespace LateRoomsCheckoutKata.Checkout
                     this._productDiscountRuleRepository.GetDiscountRuleForSKU(productWithRequiredQuantity.Key.SKU);
                 if (discountRule == null)
                 {
-                    return productWithRequiredQuantity.Key.UnitPrice;
+                    return productWithRequiredQuantity.Key.UnitPrice*productWithRequiredQuantity.Value;
                 }
                 else
                 {
