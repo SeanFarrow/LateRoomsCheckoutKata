@@ -223,7 +223,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                 int numberOfUndiscountableItems = numberOfProductsScanned % quantityForDiscount;
                 int totalPriceForDiscountableProducts = priceForDiscountableOffer * discountableItemsMultiplier;
                 int expectedPrice = (numberOfUndiscountableItems * unitPrice) + totalPriceForDiscountableProducts;
-                productDiscountRule.CalculateDiscount(quantityForDiscount, unitPrice).Returns(totalPriceForDiscountableProducts);
+                productDiscountRule.CalculateDiscount(numberOfProductsScanned, unitPrice).Returns(totalPriceForDiscountableProducts);
                 var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
                 checkout.GetTotalPrice().Should().Be(Convert.ToInt32(expectedPrice));
             }
