@@ -205,11 +205,27 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             }
 
             [Test]
-            [TestCase("a", 5, 3, 50, 40)]
+            [TestCase("a", 8, 3, 50, 40)]
             [TestCase("b", 7, 2, 30, 50)]
             public void ShouldReturnThePriceWhenASingleProductIsScannedAndTheQuantityOfTheScannedProductHasAtLeastSomePortionThatCanBeDiscounted(string sku, int numberOfProductsScanned, int quantityForDiscount, int unitPrice, int percentageReduction)
             {
-                
+                var product = new Product(sku, unitPrice);
+                var till = new Dictionary<Product, int> { { product, quantityForDiscount } };
+                var productRepository = Substitute.For<IProductRepository>();
+                productRepository.FindProductBySKU(sku).Returns(product);
+                var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
+                var productDiscountRule = Substitute.For<IProductDiscountRule>();
+                productDiscountRuleRepository.GetDiscountRuleForSKU(sku).Returns(productDiscountRule);
+                productDiscountRule.QuantityToDiscount.Returns(quantityForDiscount);
+                int discountableItemsMultiplier = numberOfProductsScanned / quantityForDiscount;
+                //The total price for a single discountable offer, i.e 3a for 130.
+                int priceForDiscountableOffer = unitPrice * quantityForDiscount- (unitPrice * percentageReduction / 100);
+                int numberOfUndiscountableItems = numberOfProductsScanned % quantityForDiscount;
+                int totalPriceForDiscountableProducts = priceForDiscountableOffer * discountableItemsMultiplier;
+                int expectedPrice = (numberOfUndiscountableItems * unitPrice) + totalPriceForDiscountableProducts;
+                productDiscountRule.CalculateDiscount(quantityForDiscount, unitPrice).Returns(totalPriceForDiscountableProducts);
+                var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
+                checkout.GetTotalPrice().Should().Be(Convert.ToInt32(expectedPrice));
             }
         }
     }
