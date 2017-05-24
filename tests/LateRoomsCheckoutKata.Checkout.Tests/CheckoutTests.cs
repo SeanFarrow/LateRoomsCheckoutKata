@@ -179,6 +179,8 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                 var productRepository = Substitute.For<IProductRepository>();
                 productRepository.FindProductBySKU(sku).Returns(product);
                 var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
+                IProductDiscountRule rule = null; //ensure we don't have a discount.
+                productDiscountRuleRepository.GetDiscountRuleForSKU(sku).Returns(rule);
                 var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
                 checkout.GetTotalPrice().Should().Be(Convert.ToInt32(unitPrice));
             }

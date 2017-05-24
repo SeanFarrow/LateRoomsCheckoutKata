@@ -78,7 +78,19 @@ namespace LateRoomsCheckoutKata.Checkout
         {
             if (this._till.Count() ==1)
             {
-                return this._till.Single().Key.UnitPrice;
+                var productWithRequiredQuantity = this._till.Single();
+                var discountRule =
+                    this._productDiscountRuleRepository.GetDiscountRuleForSKU(productWithRequiredQuantity.Key.SKU);
+                if (discountRule==null)
+                {
+                    return productWithRequiredQuantity.Key.UnitPrice;
+                }
+                else
+                {
+                    return discountRule.CalculateDiscount(
+                        productWithRequiredQuantity.Value,
+                        productWithRequiredQuantity.Key.UnitPrice);
+                }
             }
             
             return 0;
