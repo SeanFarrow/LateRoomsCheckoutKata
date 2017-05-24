@@ -186,6 +186,22 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             }
             
             [Test]
+            [TestCase("c", 3, 20)]
+            [TestCase("d", 5, 15)]
+            public void ShouldReturnTheTotalPriceWhenASingleProductWithNoDiscountIsScannedMultipleTimes(string sku, int numberOfScannedProducts, int unitPrice)
+            {
+                var product = new Product(sku, unitPrice);
+                var till = new Dictionary<Product, int> { { product, numberOfScannedProducts } };
+                var productRepository = Substitute.For<IProductRepository>();
+                productRepository.FindProductBySKU(sku).Returns(product);
+                var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
+                IProductDiscountRule rule = null; //ensure we don't have a discount.
+                productDiscountRuleRepository.GetDiscountRuleForSKU(sku).Returns(rule);
+                var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
+                checkout.GetTotalPrice().Should().Be(unitPrice*numberOfScannedProducts);
+            }
+            
+            [Test]
             [TestCase("a", 3, 50, 40)]
             [TestCase("b", 2, 30, 50)]
             public void ShouldReturnThePriceWhenASingleProductIsScannedMultipleTimesAndTheNumberOfTimesTheProductWasScannedEquatesExactlyToTheNumberOfItemsRequiredForADiscount(string sku, int quantityForDiscount, int unitPrice, int percentageReduction)
