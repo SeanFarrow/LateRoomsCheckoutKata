@@ -347,6 +347,30 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                 var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
                 checkout.GetTotalPrice().Should().Be(expectedTotalPrice);
             }
+            [Test]
+            public void ShouldReturnTheTotalPriceWhenMultipleProductsAreScannedAndSomeProductsAreDiscountableAndOthersAreNot()
+            {
+                //Construct a till with multiple products.
+                var productA = new Product("A", 50);
+                var productD = new Product("d", 15);
+                const int scannedQuantity = 5;
+                var till = new Dictionary<Product, int>() { { productA, scannedQuantity }, { productD, scannedQuantity } };
+                var productADiscountPercentage = 40;
+                var productADiscountQuantity = 3;
+                var productRepository = Substitute.For<IProductRepository>();
+                productRepository.FindProductBySKU(productA.SKU).Returns(productA);
+                productRepository.FindProductBySKU(productD.SKU).Returns(productD);
+                var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
+                var productADiscountRule = Substitute.For<IProductDiscountRule>();
+                productADiscountRule.QuantityToDiscount.Returns(productADiscountQuantity);
+                productADiscountRule.CalculateDiscount(scannedQuantity, productA.UnitPrice).Returns(130);
+                productDiscountRuleRepository.GetDiscountRuleForSKU(productA.SKU).Returns(productADiscountRule);
+                IProductDiscountRule productDDiscountRule = null;
+                productDiscountRuleRepository.GetDiscountRuleForSKU(productD.SKU).Returns(productDDiscountRule);
+                var expectedTotalPrice = 305;
+                var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
+                checkout.GetTotalPrice().Should().Be(expectedTotalPrice);
+            }
         }
     }
 }
