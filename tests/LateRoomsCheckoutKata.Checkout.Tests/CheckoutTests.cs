@@ -187,7 +187,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             
             [Test]
             [TestCase("a", 3, 50, 40)]
-            [TestCase("b", 3, 30, 50)]
+            [TestCase("b", 2, 30, 50)]
             public void ShouldReturnThePriceWhenASingleProductIsScannedMultipleTimesAndTheNumberOfTimesTheProductWasScannedEquatesExactlyToTheNumberOfItemsRequiredForADiscount(string sku, int quantityForDiscount, int unitPrice, int percentageReduction)
             {
                 var product = new Product(sku, unitPrice);
