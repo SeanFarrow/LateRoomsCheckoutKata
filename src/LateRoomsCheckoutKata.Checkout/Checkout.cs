@@ -78,7 +78,7 @@ namespace LateRoomsCheckoutKata.Checkout
         {
             if (this._till.Count() ==1)
             {
-                return Convert.ToInt32(this._till.Single().Key.UnitPrice);
+                return this._till.Single().Key.UnitPrice;
             }
             
             return 0;
