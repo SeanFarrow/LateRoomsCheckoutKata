@@ -87,7 +87,7 @@ namespace LateRoomsCheckoutKata.Checkout
                 }
                 else
                 {
-                    //We are calculating a doscount for a product.
+                    //We are calculating a discount for a product.
                     if (productWithRequiredQuantity.Value == discountRule.QuantityToDiscount)
                     {
                         //The number of this product scanned exactly equals  the quantity to discount for the product.
@@ -124,6 +124,13 @@ namespace LateRoomsCheckoutKata.Checkout
                             totalPrice += discountRule.CalculateDiscount(
                                 scannedProduct.Value,
                                 scannedProduct.Key.UnitPrice);
+                        }
+                        else
+                        {
+                            //The number of this product scanned has at least some portion that can be discounted.
+                            int undiscountablePortion = scannedProduct.Value % discountRule.QuantityToDiscount;
+                            int totalUndiscountedProductPrice =scannedProduct.Key.UnitPrice * undiscountablePortion;
+                            totalPrice +=discountRule.CalculateDiscount(scannedProduct.Value, scannedProduct.Key.UnitPrice) + totalUndiscountedProductPrice;
                         }
                     }
                     else
