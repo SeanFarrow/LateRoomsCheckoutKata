@@ -253,7 +253,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             
             [Test]
             [TestCase("d", 5, 15)]
-            public void ShouldReturnTheTotalPriceWhenMultipleProductsAreScannedMultipleTimesButNoProdictsHaveEnoughItemsInTheTilolForADiscount(string sku, int numberOfProductsToScan, int unitPrice)
+            public void ShouldReturnTheTotalPriceWhenMultipleProductsAreScannedMultipleTimesButNoProductsHaveADiscount(string sku, int numberOfProductsToScan, int unitPrice)
 {
     //Construct a till with multiple products.
     var productC = new Product("c", 20);
