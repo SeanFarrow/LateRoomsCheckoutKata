@@ -46,7 +46,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             {
                 var productRepository = Substitute.For<IProductRepository>();
                 var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
-                IDictionary<Product, uint> till = null;
+                IDictionary<Product, int> till = null;
                 var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
                 //Here we use reflection to check a private field. This isn't strictly unit testing, but given we don't need access to the till from the outside, there is no property available.
                 checkout.GetType().GetField("_till", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(checkout).Should().NotBeNull();
@@ -57,7 +57,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             {
                 var productRepository = Substitute.For<IProductRepository>();
                 var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
-                var till = new Dictionary<Product, uint>();
+                var till = new Dictionary<Product, int>();
                 var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
                 //Here we use reflection to check a private field. This isn't strictly unit testing, but given we don't need access to the till from the outside, there is no property available.
                 checkout.GetType()
@@ -125,11 +125,11 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                 var sku = "a";
                 var unitPrice = 50;
                 var expectedProduct = new Product(sku, unitPrice);
-                var expectedProductAndQuantity = new KeyValuePair<Product, uint>(expectedProduct, 1);
+                var expectedProductAndQuantity = new KeyValuePair<Product, int>(expectedProduct, 1);
                 var productRepository = Substitute.For<IProductRepository>();
                 productRepository.FindProductBySKU(sku).Returns(expectedProduct);
                 var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
-                var till = new Dictionary<Product, uint>();
+                var till = new Dictionary<Product, int>();
                 var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
                 checkout.Scan(sku);
                 till.Should().Contain(expectedProductAndQuantity);
@@ -141,11 +141,11 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
                 var sku = "a";
                 var unitPrice = 50;
                 var expectedProduct = new Product(sku, unitPrice);
-                var expectedProductAndQuantity = new KeyValuePair<Product, uint>(expectedProduct, 2);
+                var expectedProductAndQuantity = new KeyValuePair<Product, int>(expectedProduct, 2);
                 var productRepository = Substitute.For<IProductRepository>();
                 productRepository.FindProductBySKU(sku).Returns(expectedProduct);
                 var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
-                var till = new Dictionary<Product, uint> { { expectedProduct, 1}}; 
+                var till = new Dictionary<Product, int> { { expectedProduct, 1}}; 
                 var checkout = new Checkout(productRepository, productDiscountRuleRepository, till);
                 checkout.Scan(sku);
                 till.Should().Contain(expectedProductAndQuantity);
@@ -175,7 +175,7 @@ namespace LateRoomsCheckoutKata.Checkout.Tests
             public void ShouldReturnThePriceOfASingleItemWhenOnlyOneItemHasBeenScannedThroughTheTill(string sku, int unitPrice)
             {
                 var product = new Product(sku, unitPrice);
-                var till = new Dictionary<Product, uint> { { product, 1 } };
+                var till = new Dictionary<Product, int> { { product, 1 } };
                 var productRepository = Substitute.For<IProductRepository>();
                 productRepository.FindProductBySKU(sku).Returns(product);
                 var productDiscountRuleRepository = Substitute.For<IProductDiscountRuleRepository>();
