@@ -10,4 +10,4 @@ To calculate discounts I have created an IProductDiscountRule interface, stored 
 
 # building the code.
 
-Once the code has been cloned, building the code is simple, just run build.cmd. This download [Cake](http://www.cakebuild.net/), which intern installed all the required NuGet packages, build the code and runs the tests.
+Once the code has been cloned, building the code is simple, just run build.cmd. This download [Cake](http://www.cakebuild.net/), which in turn installs all the required NuGet packages, builds the code and runs the tests.
